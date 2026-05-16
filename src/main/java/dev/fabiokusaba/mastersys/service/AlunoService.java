@@ -3,6 +3,7 @@ package dev.fabiokusaba.mastersys.service;
 import dev.fabiokusaba.mastersys.domain.Aluno;
 import dev.fabiokusaba.mastersys.dto.AlunoRequest;
 import dev.fabiokusaba.mastersys.dto.AlunoResponse;
+import dev.fabiokusaba.mastersys.exception.RegraNegocioException;
 import dev.fabiokusaba.mastersys.repository.AlunoRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,7 +19,7 @@ public class AlunoService {
 
     public AlunoResponse cadastrar(AlunoRequest request) {
         if (request.email() != null && alunoRepository.existsByEmail(request.email())) {
-            throw new RuntimeException("Já existe um aluno cadastrado com esse email");
+            throw new RegraNegocioException("Já existe um aluno cadastrado com esse email");
         }
 
         Aluno aluno = AlunoRequest.toEntity(request);
@@ -54,6 +55,6 @@ public class AlunoService {
 
     private Aluno buscarEntidadePorId(Long id) {
         return alunoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Aluno não encontrado"));
+                .orElseThrow(() -> new RegraNegocioException("Aluno não encontrado"));
     }
 }
