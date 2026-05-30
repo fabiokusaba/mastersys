@@ -1,5 +1,6 @@
 package dev.fabiokusaba.mastersys.controller;
 
+import dev.fabiokusaba.mastersys.doc.AlunoControllerDoc;
 import dev.fabiokusaba.mastersys.dto.AlunoFiltroRequest;
 import dev.fabiokusaba.mastersys.dto.AlunoRequest;
 import dev.fabiokusaba.mastersys.dto.AlunoResponse;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/alunos")
-public class AlunoController {
+public class AlunoController implements AlunoControllerDoc {
     private final AlunoService alunoService;
 
     public AlunoController(AlunoService alunoService) {
@@ -26,7 +27,7 @@ public class AlunoController {
     }
 
     @GetMapping
-    Page<AlunoResponse> listar(AlunoFiltroRequest filtro, Pageable pageable) {
+    public Page<AlunoResponse> listar(AlunoFiltroRequest filtro, Pageable pageable) {
         return alunoService.listar(filtro, pageable);
     }
 
